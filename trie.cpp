@@ -1,12 +1,9 @@
-#include <iostream>
-#include <unordered_map>
-#include <string>
-#include <memory>
-#include <vector>
+#include <bits/stdc++.h>
+using namespace std;
 
 class TrieNode {
 public:
-    std::unordered_map<char, std::unique_ptr<TrieNode>> children;
+    unordered_map<char, unique_ptr<TrieNode>> children;
     bool isEndOfWord;
     
     TrieNode() : isEndOfWord(false) {}
@@ -14,7 +11,7 @@ public:
 
 class Trie {
 private:
-    std::unique_ptr<TrieNode> root;
+    unique_ptr<TrieNode> root;
     
     // Helper method to recursively delete nodes
     void deleteNode(TrieNode* node) {
@@ -27,7 +24,7 @@ private:
     
 public:
     Trie() {
-        root = std::make_unique<TrieNode>();
+        root = make_unique<TrieNode>();
     }
     
     // Destructor
@@ -36,12 +33,12 @@ public:
     }
     
     // Insert a word into the trie
-    void insert(const std::string& word) {
+    void insert(const string& word) {
         TrieNode* current = root.get();
         
         for (char c : word) {
             if (current->children.find(c) == current->children.end()) {
-                current->children[c] = std::make_unique<TrieNode>();
+                current->children[c] = make_unique<TrieNode>();
             }
             current = current->children[c].get();
         }
@@ -50,7 +47,7 @@ public:
     }
     
     // Search for a word in the trie
-    bool search(const std::string& word) {
+    bool search(const string& word) {
         TrieNode* current = root.get();
         
         for (char c : word) {
@@ -64,7 +61,7 @@ public:
     }
     
     // Check if any word starts with the given prefix
-    bool startsWith(const std::string& prefix) {
+    bool startsWith(const string& prefix) {
         TrieNode* current = root.get();
         
         for (char c : prefix) {
@@ -78,8 +75,8 @@ public:
     }
     
     // Optional: Get all words with a given prefix
-    std::vector<std::string> getWordsWithPrefix(const std::string& prefix) {
-        std::vector<std::string> result;
+    vector<string> getWordsWithPrefix(const string& prefix) {
+        vector<string> result;
         TrieNode* current = root.get();
         
         // Navigate to the prefix node
@@ -97,7 +94,7 @@ public:
     
 private:
     // Helper method to collect all words from a node
-    void collectWords(TrieNode* node, const std::string& currentWord, std::vector<std::string>& result) {
+    void collectWords(TrieNode* node, const string& currentWord, vector<string>& result) {
         if (node->isEndOfWord) {
             result.push_back(currentWord);
         }
@@ -112,10 +109,10 @@ private:
 void testTrie() {
     Trie trie;
     
-    std::cout << "=== Trie Data Structure Test ===" << std::endl;
+    cout << "=== Trie Data Structure Test ===" << endl;
     
     // Test insert and search
-    std::cout << "\n1. Testing insert and search:" << std::endl;
+    cout << "\n1. Testing insert and search:" << endl;
     
     trie.insert("apple");
     trie.insert("app");
@@ -124,39 +121,39 @@ void testTrie() {
     trie.insert("banana");
     trie.insert("band");
     
-    std::cout << "Inserted words: apple, app, application, apply, banana, band" << std::endl;
+    cout << "Inserted words: apple, app, application, apply, banana, band" << endl;
     
     // Test search
-    std::cout << "\n2. Testing search:" << std::endl;
-    std::cout << "Search 'apple': " << (trie.search("apple") ? "Found" : "Not found") << std::endl;
-    std::cout << "Search 'app': " << (trie.search("app") ? "Found" : "Not found") << std::endl;
-    std::cout << "Search 'appl': " << (trie.search("appl") ? "Found" : "Not found") << std::endl;
-    std::cout << "Search 'banana': " << (trie.search("banana") ? "Found" : "Not found") << std::endl;
-    std::cout << "Search 'orange': " << (trie.search("orange") ? "Found" : "Not found") << std::endl;
+    cout << "\n2. Testing search:" << endl;
+    cout << "Search 'apple': " << (trie.search("apple") ? "Found" : "Not found") << endl;
+    cout << "Search 'app': " << (trie.search("app") ? "Found" : "Not found") << endl;
+    cout << "Search 'appl': " << (trie.search("appl") ? "Found" : "Not found") << endl;
+    cout << "Search 'banana': " << (trie.search("banana") ? "Found" : "Not found") << endl;
+    cout << "Search 'orange': " << (trie.search("orange") ? "Found" : "Not found") << endl;
     
     // Test startsWith
-    std::cout << "\n3. Testing startsWith:" << std::endl;
-    std::cout << "StartsWith 'app': " << (trie.startsWith("app") ? "Yes" : "No") << std::endl;
-    std::cout << "StartsWith 'appl': " << (trie.startsWith("appl") ? "Yes" : "No") << std::endl;
-    std::cout << "StartsWith 'ban': " << (trie.startsWith("ban") ? "Yes" : "No") << std::endl;
-    std::cout << "StartsWith 'ora': " << (trie.startsWith("ora") ? "Yes" : "No") << std::endl;
-    std::cout << "StartsWith 'z': " << (trie.startsWith("z") ? "Yes" : "No") << std::endl;
+    cout << "\n3. Testing startsWith:" << endl;
+    cout << "StartsWith 'app': " << (trie.startsWith("app") ? "Yes" : "No") << endl;
+    cout << "StartsWith 'appl': " << (trie.startsWith("appl") ? "Yes" : "No") << endl;
+    cout << "StartsWith 'ban': " << (trie.startsWith("ban") ? "Yes" : "No") << endl;
+    cout << "StartsWith 'ora': " << (trie.startsWith("ora") ? "Yes" : "No") << endl;
+    cout << "StartsWith 'z': " << (trie.startsWith("z") ? "Yes" : "No") << endl;
     
     // Test getWordsWithPrefix (bonus functionality)
-    std::cout << "\n4. Testing getWordsWithPrefix (bonus):" << std::endl;
+    cout << "\n4. Testing getWordsWithPrefix (bonus):" << endl;
     auto wordsWithApp = trie.getWordsWithPrefix("app");
-    std::cout << "Words starting with 'app': ";
+    cout << "Words starting with 'app': ";
     for (const auto& word : wordsWithApp) {
-        std::cout << word << " ";
+        cout << word << " ";
     }
-    std::cout << std::endl;
+    cout << endl;
     
     auto wordsWithBan = trie.getWordsWithPrefix("ban");
-    std::cout << "Words starting with 'ban': ";
+    cout << "Words starting with 'ban': ";
     for (const auto& word : wordsWithBan) {
-        std::cout << word << " ";
+        cout << word << " ";
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 int main() {

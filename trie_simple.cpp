@@ -1,11 +1,9 @@
-#include <iostream>
-#include <unordered_map>
-#include <string>
-#include <memory>
+#include <bits/stdc++.h>
+using namespace std;
 
 class TrieNode {
 public:
-    std::unordered_map<char, std::unique_ptr<TrieNode>> children;
+    unordered_map<char, unique_ptr<TrieNode>> children;
     bool isEndOfWord;
     
     TrieNode() : isEndOfWord(false) {}
@@ -13,20 +11,20 @@ public:
 
 class Trie {
 private:
-    std::unique_ptr<TrieNode> root;
+    unique_ptr<TrieNode> root;
     
 public:
     Trie() {
-        root = std::make_unique<TrieNode>();
+        root = make_unique<TrieNode>();
     }
     
     // Insert a word into the trie
-    void insert(const std::string& word) {
+    void insert(const string& word) {
         TrieNode* current = root.get();
         
         for (char c : word) {
             if (current->children.find(c) == current->children.end()) {
-                current->children[c] = std::make_unique<TrieNode>();
+                current->children[c] = make_unique<TrieNode>();
             }
             current = current->children[c].get();
         }
@@ -35,7 +33,7 @@ public:
     }
     
     // Search for a word in the trie
-    bool search(const std::string& word) {
+    bool search(const string& word) {
         TrieNode* current = root.get();
         
         for (char c : word) {
@@ -49,7 +47,7 @@ public:
     }
     
     // Check if any word starts with the given prefix
-    bool startsWith(const std::string& prefix) {
+    bool startsWith(const string& prefix) {
         TrieNode* current = root.get();
         
         for (char c : prefix) {
@@ -74,14 +72,14 @@ int main() {
     trie.insert("banana");
     
     // Test search
-    std::cout << "Search 'apple': " << (trie.search("apple") ? "true" : "false") << std::endl;
-    std::cout << "Search 'app': " << (trie.search("app") ? "true" : "false") << std::endl;
-    std::cout << "Search 'appl': " << (trie.search("appl") ? "true" : "false") << std::endl;
+    cout << "Search 'apple': " << (trie.search("apple") ? "true" : "false") << endl;
+    cout << "Search 'app': " << (trie.search("app") ? "true" : "false") << endl;
+    cout << "Search 'appl': " << (trie.search("appl") ? "true" : "false") << endl;
     
     // Test startsWith
-    std::cout << "StartsWith 'app': " << (trie.startsWith("app") ? "true" : "false") << std::endl;
-    std::cout << "StartsWith 'appl': " << (trie.startsWith("appl") ? "true" : "false") << std::endl;
-    std::cout << "StartsWith 'ban': " << (trie.startsWith("ban") ? "true" : "false") << std::endl;
+    cout << "StartsWith 'app': " << (trie.startsWith("app") ? "true" : "false") << endl;
+    cout << "StartsWith 'appl': " << (trie.startsWith("appl") ? "true" : "false") << endl;
+    cout << "StartsWith 'ban': " << (trie.startsWith("ban") ? "true" : "false") << endl;
     
     return 0;
 }
